@@ -1,5 +1,6 @@
 import 'package:bookmark_models/bookmark_requests.dart';
 import 'package:dart_frog/dart_frog.dart';
+import 'package:dart_frog_cors/dart_frog_cors.dart';
 import 'package:event_bloc/event_bloc.dart';
 import 'package:event_db/event_db.dart';
 import 'package:event_hive/base_event_hive.dart';
@@ -8,8 +9,11 @@ import '../models/log.dart';
 import '../models/repository.dart';
 
 Handler middleware(Handler handler) {
+  const isDevelopmentMode = bool.fromEnvironment('dart.vm.product') == false;
   return repositoryLayer(
-    handler.use(requestLogger()).use(
+    handler
+        .use(requestLogger())
+        .use(
           (handler) => (context) => requestLogger(
                 logger: (log, isError) async =>
                     await context.read<DatabaseRepository>().saveModel(
@@ -17,6 +21,13 @@ Handler middleware(Handler handler) {
                           LogModel.fromLog(log: log, isError: isError),
                         ),
               )(handler)(context),
+        )
+        .use(
+          cors(
+            allowOrigin: !isDevelopmentMode
+                ? 'https://vhcblade.com, https://*.vhcblade.com'
+                : CorsDefaults.allowOrigin,
+          ),
         ),
   );
 }

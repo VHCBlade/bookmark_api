@@ -11,8 +11,8 @@ Future<Response> onRequest(RequestContext context, String collectionId) async {
   switch (context.request.method) {
     case HttpMethod.put:
       return putResponse(context, collectionId);
-    case HttpMethod.get:
-      return getResponse(context, collectionId);
+    case HttpMethod.post:
+      return postResponse(context, collectionId);
     // ignore: no_default_cases
     default:
       return notFoundResponse();
@@ -46,7 +46,7 @@ Future<Response> putResponse(
   return Response(body: collectionId);
 }
 
-Future<Response> getResponse(
+Future<Response> postResponse(
   RequestContext context,
   String collectionId,
 ) async {
