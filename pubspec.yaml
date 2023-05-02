@@ -8,10 +8,11 @@ environment:
 
 dependencies:
 
-  bookmark_models:
-    git:
-      ref: master
-      url: git@github.com:VHCBlade/bookmark_models.git
+  bookmark_models: ^0.1.0
+  # bookmark_models:
+  #   git:
+  #     ref: master
+  #     url: git@github.com:VHCBlade/bookmark_models.git
 
   dart_frog: ^0.3.0
   dart_frog_cors: ^1.0.0
