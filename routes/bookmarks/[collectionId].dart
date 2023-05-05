@@ -41,7 +41,7 @@ Future<Response> putResponse(
     return notFoundResponse();
   }
   bookmarkShareRequest.id = shareRequestId;
-  database.saveModel(collectionId, bookmarkShareRequest);
+  await database.saveModel(fullId, bookmarkShareRequest);
 
   return Response(body: collectionId);
 }

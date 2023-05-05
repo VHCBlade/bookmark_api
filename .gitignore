@@ -13,3 +13,6 @@ build/
 coverage/
 tokens/
 requests/
+
+routes/.well-known/
+public/.well-known/

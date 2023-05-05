@@ -25,7 +25,7 @@ Handler middleware(Handler handler) {
         .use(
           cors(
             allowOrigin: !isDevelopmentMode
-                ? 'https://vhcblade.com, https://*.vhcblade.com'
+                ? 'https://vhcblade.com, https://*.vhcblade.com, http://*.vhcblade.com'
                 : CorsDefaults.allowOrigin,
           ),
         ),
