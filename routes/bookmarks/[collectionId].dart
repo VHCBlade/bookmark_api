@@ -33,15 +33,16 @@ Future<Response> putResponse(
   final database = context.read<DatabaseRepository>();
 
   final fullId = (BookmarkCollectionModel()..idSuffix = collectionId).id!;
+  final specificDB = SpecificDatabase(database, fullId);
   final foundModel =
-      await database.findModel<BookmarkShareRequest>(fullId, shareRequestId);
+      await specificDB.findModel<BookmarkShareRequest>(shareRequestId);
   if (foundModel == null ||
       foundModel.profile != bookmarkShareRequest.profile ||
       fullId != bookmarkShareRequest.collectionModel.id) {
     return notFoundResponse();
   }
   bookmarkShareRequest.id = shareRequestId;
-  await database.saveModel(fullId, bookmarkShareRequest);
+  await specificDB.saveModel(bookmarkShareRequest);
 
   return Response(body: collectionId);
 }

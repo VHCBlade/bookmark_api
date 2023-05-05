@@ -24,9 +24,9 @@ Future<Response> onRequest(RequestContext context) async {
     return Response(statusCode: 400, body: 'Syntax Error for Request');
   }
 
-  final database = context.read<DatabaseRepository>();
+  final database = SpecificDatabase(context.read<DatabaseRepository>(), id);
 
-  final foundModel = await database.findModel(id, shareRequestId);
+  final foundModel = await database.findModel(shareRequestId);
   if (foundModel != null) {
     return Response(
       statusCode: 460,
@@ -34,6 +34,6 @@ Future<Response> onRequest(RequestContext context) async {
     );
   }
   bookmarkShareRequest.id = shareRequestId;
-  await database.saveModel(id, bookmarkShareRequest);
+  await database.saveModel(bookmarkShareRequest);
   return Response(body: getIdSuffix(id));
 }
